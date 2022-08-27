@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>GraphTheory</title>
+    <style>
+        body{
+            background-color: rgb(155, 155, 155);
+        }
+        #main-ctn{
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 300px;
+        }
+        #center-ctn{
+            width: 600px;
+        }
+        canvas{
+            background-color: rgb(255, 255, 255);
+            width: 600px;
+            height: 600px;
+        }
+        table, tr, td, input, button{
+            margin: 0px;
+            border: none;
+            padding: 0;
+            outline: none;
+            border-collapse: collapse;
+            color: rgb(100, 100, 100);
+        }
+        table{
+            width: 100%;
+            margin-top: -4px;
+        }
+        td{
+            width: 155px;
+            color: white;
+            font-size: 30px;
+        }
+        input, button{
+            background-color: white;
+            margin-top: 5px;
+            font-size: large;
+        }
+        button{
+            width: 150px;
+            height: 50px;
+        }
+        input{
+            width: 130px;
+            padding: 10px;
+            text-align: center;
+        }
+        button:hover{
+            background-color: rgb(220, 220, 220);
+        }
+        button:active{
+            background-color: rgb(200, 200, 200);
+        }
+        #log-ctn{
+            vertical-align: text-top;
+            padding-right: 10px;
+            margin-top: 5px;
+            height: 315px;
+            overflow-y: scroll;
+        }
+    </style>
+</head>
+<body>
+    <div id="main-ctn">
+        <div id="center-ctn">
+            <canvas width="500", height="500"></canvas>
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <button id="vertices-refresh-btn" onclick="refresh_canvas()">重新整理</button>
+                    </td>
+                    <td rowspan="7" colspan="2">
+                        <div id="log-ctn"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        節點數　：
+                    </td>
+                    <td>
+                        <input id="vertices-limit-input" type="number" value="10" min="2" max="25" onchange="update_refresh_vertices_text()">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        最大邊數：
+                    </td>
+                    <td>
+                        <input id="edges-limit-input" type="number" value="10" min="0" max="100" onchange="update_refresh_vertices_text()">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <br>
+                        並尋找最短路徑
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        從　　　：
+                    </td>
+                    <td>
+                        <input id="start-vertex-input" type="number" value="0" min="0" max="25">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        到　　　：
+                    </td>
+                    <td>
+                        <input id="end-vertex-input" type="number" value="1" min="0" max="25">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script src="js/helpers/is_valid_limit.js"></script>
+    <script src="js/helpers/get_2d_array.js"></script>
+    <script src="js/helpers/get_random_int.js"></script>
+    <script src="js/helpers/string_padding.js"></script>
+    <script src="js/option_functions/update_refresh_text.js"></script>
+    <script src="js/option_functions/refresh.js"></script>
+    <script src="js/Canvas.js"></script>
+    <script src="js/Brush.js"></script>
+    <script src="js/BaseGraph.js"></script>
+    <script src="js/Graph.js"></script>
+    <script src="js/Main.js"></script>
+</body>
+</html>
