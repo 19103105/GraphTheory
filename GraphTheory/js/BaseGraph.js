@@ -40,14 +40,30 @@ class BaseGraph extends Brush
      */
     edgeLimit = 10;
 
+    /**
+     * 起點節點，預設為 0
+     */
+    startVertexId = 0;
+
+    /**
+     * 終點節點，預設為 0
+     */
+    endVertexId = 1;
+
+    /**
+     * 起點節點至終點節點的最短路徑
+     */
     shortestPath = [];
 
+    /**
+     * 起點節點至終點節點的最短距離
+     */
     shortestDistance = 0;
 
     /**
      * 初始化節點陣列
      */
-    innitialize_vertices()
+    update_vertices()
     {
         try
         {
@@ -78,7 +94,7 @@ class BaseGraph extends Brush
     /**
      * 初始化節點之間的邊
      */
-    innitialize_edges()
+    update_edges()
     {
         try
         {
@@ -200,10 +216,15 @@ class BaseGraph extends Brush
      * @param {int} id2 終點節點
      * @returns {object} path:路徑, distance:最短距離
      */
-    dijkstra(id1 = startVertex.value, id2 = endVertex.value)
+    dijkstra(id1 = this.startVertexId, id2 = this.endVertexId)
     {
         try
         {
+            if (id1 == id2)
+            {
+                return [id1, id2];
+            }
+
             this.shortestDistance = 0;
             this.shortestPath = [];
 
@@ -234,7 +255,7 @@ class BaseGraph extends Brush
             {
                 if (safeLock-- < 0)
                 {
-                    console.log("error");
+                    console.log("infinite loop error");
                     return {
                         path: [],
                         distances: -1
@@ -278,6 +299,7 @@ class BaseGraph extends Brush
 
             // 從終點節點開始進行 source 回朔
             let vc = id2;
+
             // 若 Vc 尚有 source
             while (sources[vc] != null)
             {
@@ -286,10 +308,12 @@ class BaseGraph extends Brush
                 // 將 Vc 更新為其 source
                 vc = sources[vc];
             }
+
             // 最後將起點寫入 shortestPath
             this.shortestPath.push(id1);
             // 設 shortestDistance 為 id2 的 distance
             this.shortestDistance = distances[id2];
+
             // 翻轉 shortestPath
             return this.shortestPath.reverse();
         }

@@ -39,17 +39,21 @@
         }
         input, button{
             background-color: white;
-            margin-top: 5px;
+            margin-top: 10px;
             font-size: large;
+            height: 100%;
         }
         button{
-            width: 150px;
+            width: 310px;
             height: 50px;
+            margin-right: 10px;
         }
         input{
             width: 130px;
-            padding: 10px;
+            height: 50px;
             text-align: center;
+            padding-right: 20px;
+            border: 0px;
         }
         button:hover{
             background-color: rgb(220, 220, 220);
@@ -60,8 +64,9 @@
         #log-ctn{
             vertical-align: text-top;
             padding-right: 10px;
-            margin-top: 5px;
-            height: 315px;
+            padding-left: 2px;
+            margin-top: 10px;
+            height: 410px;
             overflow-y: scroll;
         }
     </style>
@@ -73,48 +78,52 @@
             <table>
                 <tr>
                     <td colspan="2">
-                        <button id="vertices-refresh-btn" onclick="refresh_canvas()">重新整理</button>
+                        <button id="vertices-refresh-btn" onclick="refresh_canvas()">全部隨機化</button>
                     </td>
                     <td rowspan="7" colspan="2">
                         <div id="log-ctn"></div>
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        節點數　：
-                    </td>
-                    <td>
-                        <input id="vertices-limit-input" type="number" value="10" min="2" max="25" onchange="update_refresh_vertices_text()">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        最大邊數：
-                    </td>
-                    <td>
-                        <input id="edges-limit-input" type="number" value="10" min="0" max="100" onchange="update_refresh_vertices_text()">
+                    <td colspan="2">
+                        <button id="vertices-refresh-btn" onclick="refresh_edges()">隨機排列邊</button>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <br>
-                        並尋找最短路徑
+                        <button id="start-vertex-refresh-btn" onclick="refresh_path()">更新路徑</button>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        從　　　：
+                        節點數：
                     </td>
                     <td>
-                        <input id="start-vertex-input" type="number" value="0" min="0" max="25">
+                        <input id="vertices-limit-input" type="number" value="10" min="2" max="25" onchange="update_inputs()">
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        到　　　：
+                        邊數：
                     </td>
                     <td>
-                        <input id="end-vertex-input" type="number" value="1" min="0" max="25">
+                        <input id="edges-limit-input" type="number" value="10" min="0" max="100" onchange="update_inputs()">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        起點節點：
+                    </td>
+                    <td>
+                        <input id="start-vertex-input" type="number" value="0" min="0" max="25" onchange="update_inputs()">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        終點節點：
+                    </td>
+                    <td>
+                        <input id="end-vertex-input" type="number" value="1" min="0" max="25" onchange="update_inputs()">
                     </td>
                 </tr>
             </table>
@@ -124,7 +133,10 @@
     <script src="js/helpers/get_2d_array.js"></script>
     <script src="js/helpers/get_random_int.js"></script>
     <script src="js/helpers/string_padding.js"></script>
-    <script src="js/option_functions/update_refresh_text.js"></script>
+    <script src="js/option_functions/get_valid_path.js"></script>
+    <script src="js/option_functions/get_valid_edge_limit.js"></script>
+    <script src="js/option_functions/get_valid_vertex_limit.js"></script>
+    <script src="js/option_functions/update_inputs.js"></script>
     <script src="js/option_functions/refresh.js"></script>
     <script src="js/Canvas.js"></script>
     <script src="js/Brush.js"></script>

@@ -3,14 +3,13 @@ const verticesRefreshBtn   = document.querySelector("#vertices-refresh-btn");
 const edgesLimitElement    = document.querySelector("#edges-limit-input");
 const edgesRefreshBtn      = document.querySelector("#edges-refresh-btn");
 const logCtn               = document.querySelector("#log-ctn");
-const startVertex          = document.querySelector("#start-vertex-input");
-const endVertex            = document.querySelector("#end-vertex-input");
+const startVertexElement   = document.querySelector("#start-vertex-input");
+const startRefresh         = document.querySelector("#start-vertex-refresh-btn");
+const endVertexElement     = document.querySelector("#end-vertex-input");
+const endRefresh           = document.querySelector("#end-vertex-refresh-btn");
 
-update_refresh_vertices_text();
+update_inputs();
 
 let graph = new Graph();
-
-startVertex.value = 0;
-endVertex.value = verticesLimitElement.value;
 
 refresh_canvas();

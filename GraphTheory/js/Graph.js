@@ -1,18 +1,76 @@
 class Graph extends BaseGraph
 {
     /**
+     * 設定節點數
+     * @param {int} vertexLimit 節點數
+     */
+    set_vertex_limit(vertexLimit)
+    {
+        try
+        {
+            this.vertexLimit = vertexLimit;
+        }
+        catch (e)
+        {
+            console.log(e.message);
+        }
+    }
+
+    /**
+     * 設定邊數
+     * @param {int} edgeLimit 邊數
+     */
+    set_edge_limit(edgeLimit)
+    {
+        try
+        {
+            this.edgeLimit = edgeLimit;
+        }
+        catch (e)
+        {
+            console.log(e.message);
+        }
+    }
+
+    /**
+     * 設定路徑起點與終點
+     * @param {int} startVertexId 起點節點編號
+     * @param {int} endVertexId 終點節點編號
+     */
+    set_path(startVertexId, endVertexId)
+    {
+        try
+        {
+            this.startVertexId = startVertexId;
+            this.endVertexId   = endVertexId;
+        }
+        catch (e)
+        {
+            console.log(e.message);
+        }
+    }
+
+    /**
      * 建立圖
      * @param {int} vertexLimit 最大節點數
      * @param {int} edgeLimit 最大邊數
      * @returns 不回傳值
      */
-    generate(vertexLimit = this.vertexLimit, edgeLimit = this.edgeLimit)
+    generate(updateVertices = 1, updateEdges = 1)
     {
         try
         {
             this.erase_canvas();
-            this.update_vertices(vertexLimit);
-            this.update_edges(edgeLimit);
+            if (updateVertices)
+            {
+                this.update_vertices();
+            }
+            if (updateEdges)
+            {
+                this.update_edges();
+            }
+            this.show_vertices();
+            this.show_edges();
             this.dijkstra();
             this.print_graph_data();
         }
@@ -23,26 +81,14 @@ class Graph extends BaseGraph
     }
 
     /**
-     * 更新節點
-     * @param {int} vertexLimit 節點數
+     * 顯示節點
      */
-    update_vertices(vertexLimit = this.vertexLimit)
+    show_vertices()
     {
         try
         {
-            // 若節點數有異常則設為預設值
-            if (!is_valid_limit(vertexLimit))
-            {
-                vertexLimit = 10;
-            }
-            // 若節點數無異動則無須重新整理
-            if (!this.vertices.length || vertexLimit != this.vertexLimit)
-            {
-                this.vertexLimit = vertexLimit;
-                this.innitialize_vertices();
-            }
             // 逐一實現節點資料
-            for (let i = 0; i < vertexLimit; i++)
+            for (let i = 0; i < this.vertexLimit; i++)
             {
                 this.activate_vertex(i);
             }
@@ -54,15 +100,13 @@ class Graph extends BaseGraph
     }
     
     /**
-     * 更新邊
+     * 顯示邊
      * @param {int} edgeLimit 最大邊數
      */
-    update_edges(edgeLimit = this.edgeLimit)
+    show_edges()
     {
         try
         {
-            this.edgeLimit = edgeLimit;
-            this.innitialize_edges();
             // 逐一實現鄰接矩陣內的資料
             for (let i = 0; i < this.vertexLimit; i++)
             {
@@ -90,9 +134,14 @@ class Graph extends BaseGraph
         {
             let temp = "Shortest Path:<br>";
 
+            if (this.shortestPath.length == 2 && this.shortestPath[0] == this.shortestPath[1])
+            {
+                logCtn.innerHTML = "起點即終點。<br><br>最短距離:<br>0";
+                return;
+            }
             if (this.shortestPath.length == 1)
             {
-                temp += "No paths was found.<br>";
+                temp += "此路徑不通。<br>";
             }
             else
             {
@@ -105,22 +154,7 @@ class Graph extends BaseGraph
                 }
                 this.canvas.lineWidth  = 1;
                 this.canvas.strokeStyle = "#000000";
-                temp += `<br>Distance:<br>${this.shortestDistance}<br>`;
-            }
-            
-
-            temp += "<br>Adjacency Data:<br>";
-
-            for (let i = 0; i < this.edges.length; i++)
-            {
-                for (let j = 0; j < this.edges.length; j++)
-                {
-                    if (!this.edges[i][j])
-                    {
-                        continue;
-                    }
-                    temp += `E(${string_padding(i)}, ${string_padding(j)}) = ${this.edges[i][j]}<br>`;
-                }
+                temp += `<br>最短距離:<br>${this.shortestDistance}<br>`;
             }
 
             logCtn.innerHTML = temp;
