@@ -19,6 +19,23 @@ class Canvas
     }
 
     /**
+     * 指定畫布元素
+     * @param {string} id 元素 id
+     */
+    set_canvas(id)
+    {
+        try
+        {
+            this.canvasElement = document.querySelector(id);
+            this.canvas = this.canvasElement.getContext("2d");
+        }
+        catch (e)
+        {
+            throw e;
+        }
+    }
+
+    /**
      * 回傳指定兩點之間的距離
      * @param {*} x1 點 1 的 X 座標
      * @param {*} y1 點 1 的 Y 座標

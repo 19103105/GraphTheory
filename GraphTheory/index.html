@@ -13,12 +13,12 @@
             margin-bottom: 300px;
         }
         #center-ctn{
-            width: 600px;
+            width: 400px;
         }
         canvas{
             background-color: rgb(255, 255, 255);
-            width: 600px;
-            height: 600px;
+            width: 400px;
+            height: 400px;
         }
         table, tr, td, input, button{
             margin: 0px;
@@ -33,41 +33,36 @@
             margin-top: -4px;
         }
         td{
-            width: 155px;
             color: white;
-            font-size: 30px;
-        }
-        input, button{
-            background-color: white;
-            margin-top: 10px;
-            font-size: large;
-            height: 100%;
-        }
-        button{
-            width: 310px;
-            height: 50px;
-            margin-right: 10px;
+            font-size: 20px;
+            width: 100px;
         }
         input{
-            width: 130px;
-            height: 50px;
-            text-align: center;
-            padding-right: 20px;
+            background-color: white;
             border: 0px;
-        }
-        button:hover{
-            background-color: rgb(220, 220, 220);
-        }
-        button:active{
-            background-color: rgb(200, 200, 200);
+            text-align: center;
+            font-size: 20px;
+            padding-right: 20px;
+            margin-top: 10px;
+            width: 75px;
+            height: 40px;
         }
         #log-ctn{
             vertical-align: text-top;
             padding-right: 10px;
-            padding-left: 2px;
+            padding-left: 10px;
             margin-top: 10px;
-            height: 410px;
+            height: 190px;
             overflow-y: scroll;
+        }
+        #adjacency-matrix{
+            background-color: rgb(155, 155, 155);
+            margin-left: 10px;
+            border: 2px;
+            border-style: solid;
+            border-color: white;
+            width: 800px;
+            height: 800px;
         }
     </style>
 </head>
@@ -77,29 +72,14 @@
             <canvas width="500", height="500"></canvas>
             <table>
                 <tr>
-                    <td colspan="2">
-                        <button id="vertices-refresh-btn" onclick="refresh_canvas()">全部隨機化</button>
-                    </td>
-                    <td rowspan="7" colspan="2">
-                        <div id="log-ctn"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <button id="vertices-refresh-btn" onclick="refresh_edges()">隨機排列邊</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <button id="start-vertex-refresh-btn" onclick="refresh_path()">更新路徑</button>
-                    </td>
-                </tr>
-                <tr>
                     <td>
                         節點數：
                     </td>
                     <td>
-                        <input id="vertices-limit-input" type="number" value="10" min="2" max="25" onchange="update_inputs()">
+                        <input id="vertices-limit-input" type="number" value="10" min="2" max="25" onchange="refresh_vertices()">
+                    </td>
+                    <td rowspan="4" colspan="2">
+                        <div id="log-ctn"></div>
                     </td>
                 </tr>
                 <tr>
@@ -107,7 +87,7 @@
                         邊數：
                     </td>
                     <td>
-                        <input id="edges-limit-input" type="number" value="10" min="0" max="100" onchange="update_inputs()">
+                        <input id="edges-limit-input" type="number" value="10" min="0" max="300" onchange="refresh_edges()">
                     </td>
                 </tr>
                 <tr>
@@ -115,7 +95,7 @@
                         起點節點：
                     </td>
                     <td>
-                        <input id="start-vertex-input" type="number" value="0" min="0" max="25" onchange="update_inputs()">
+                        <input id="start-vertex-input" type="number" value="0" min="0" max="25" onchange="refresh_path()">
                     </td>
                 </tr>
                 <tr>
@@ -123,11 +103,15 @@
                         終點節點：
                     </td>
                     <td>
-                        <input id="end-vertex-input" type="number" value="1" min="0" max="25" onchange="update_inputs()">
+                        <input id="end-vertex-input" type="number" value="1" min="0" max="25" onchange="refresh_path()">
                     </td>
+                </tr>
+                <tr>
+                    <td> </td>
                 </tr>
             </table>
         </div>
+        <canvas id="adjacency-matrix"></canvas>
     </div>
     <script src="js/helpers/is_valid_limit.js"></script>
     <script src="js/helpers/get_2d_array.js"></script>
@@ -140,6 +124,7 @@
     <script src="js/option_functions/refresh.js"></script>
     <script src="js/Canvas.js"></script>
     <script src="js/Brush.js"></script>
+    <script src="js/AdjacencyMatrix.js"></script>
     <script src="js/BaseGraph.js"></script>
     <script src="js/Graph.js"></script>
     <script src="js/Main.js"></script>

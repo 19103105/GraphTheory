@@ -8,8 +8,13 @@ const startRefresh         = document.querySelector("#start-vertex-refresh-btn")
 const endVertexElement     = document.querySelector("#end-vertex-input");
 const endRefresh           = document.querySelector("#end-vertex-refresh-btn");
 
-update_inputs();
-
 let graph = new Graph();
+let adjacencyMatrix = new AdjacencyMatrix();
+adjust_inputs();
+refresh_vertices();
+refresh_edges();
+refresh_path();
 
-refresh_canvas();
+adjacencyMatrix.set_matrix_size(graph.vertexLimit);
+adjacencyMatrix.set_adjacency(graph.edges);
+adjacencyMatrix.set_grids();

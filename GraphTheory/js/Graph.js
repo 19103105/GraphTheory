@@ -2,13 +2,12 @@ class Graph extends BaseGraph
 {
     /**
      * 設定節點數
-     * @param {int} vertexLimit 節點數
      */
-    set_vertex_limit(vertexLimit)
+    set_vertex_limit()
     {
         try
         {
-            this.vertexLimit = vertexLimit;
+            this.vertexLimit = verticesLimitElement.value;
         }
         catch (e)
         {
@@ -18,13 +17,12 @@ class Graph extends BaseGraph
 
     /**
      * 設定邊數
-     * @param {int} edgeLimit 邊數
      */
-    set_edge_limit(edgeLimit)
+    set_edge_limit()
     {
         try
         {
-            this.edgeLimit = edgeLimit;
+            this.edgeLimit = edgesLimitElement.value;
         }
         catch (e)
         {
@@ -34,15 +32,13 @@ class Graph extends BaseGraph
 
     /**
      * 設定路徑起點與終點
-     * @param {int} startVertexId 起點節點編號
-     * @param {int} endVertexId 終點節點編號
      */
-    set_path(startVertexId, endVertexId)
+    set_path()
     {
         try
         {
-            this.startVertexId = startVertexId;
-            this.endVertexId   = endVertexId;
+            this.startVertexId = startVertexElement.value;
+            this.endVertexId   = endVertexElement.value;
         }
         catch (e)
         {
@@ -56,18 +52,22 @@ class Graph extends BaseGraph
      * @param {int} edgeLimit 最大邊數
      * @returns 不回傳值
      */
-    generate(updateVertices = 1, updateEdges = 1)
+    generate(updateVertices, updateEdges, updatePath)
     {
         try
         {
             this.erase_canvas();
-            if (updateVertices)
+            if (updateVertices || this.vertices.length == 0)
             {
                 this.update_vertices();
             }
-            if (updateEdges)
+            if (updateEdges || this.edges.length == 0)
             {
-                this.update_edges();
+                this.randomize_edges();
+            }
+            if (updatePath)
+            {
+                this.set_path();
             }
             this.show_vertices();
             this.show_edges();
@@ -108,9 +108,9 @@ class Graph extends BaseGraph
         try
         {
             // 逐一實現鄰接矩陣內的資料
-            for (let i = 0; i < this.vertexLimit; i++)
+            for (let i = 0; i < this.edges.length; i++)
             {
-                for (let j = 0; j < this.vertexLimit; j++)
+                for (let j = 0; j < this.edges.length; j++)
                 {
                     if (this.edges[i][j] != 0)
                     {
@@ -132,7 +132,7 @@ class Graph extends BaseGraph
     {
         try
         {
-            let temp = "Shortest Path:<br>";
+            let temp = "最短路徑：<br>";
 
             if (this.shortestPath.length == 2 && this.shortestPath[0] == this.shortestPath[1])
             {

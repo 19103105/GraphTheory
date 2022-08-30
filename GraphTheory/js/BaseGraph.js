@@ -41,6 +41,11 @@ class BaseGraph extends Brush
     edgeLimit = 10;
 
     /**
+     * 未使用的邊
+     */
+    unusedEdges = [];
+
+    /**
      * 起點節點，預設為 0
      */
     startVertexId = 0;
@@ -61,7 +66,7 @@ class BaseGraph extends Brush
     shortestDistance = 0;
 
     /**
-     * 初始化節點陣列
+     * 更新節點陣列
      */
     update_vertices()
     {
@@ -86,15 +91,14 @@ class BaseGraph extends Brush
         }
         catch (e)
         {
-            console.log(e.message);
             throw e;
         }
     }
 
     /**
-     * 初始化節點之間的邊
+     * 更新節點之間的邊
      */
-    update_edges()
+    randomize_edges()
     {
         try
         {
@@ -103,7 +107,7 @@ class BaseGraph extends Brush
             // 鄰接的暫存陣列
             let tempEdges = get_2d_array(this.vertexLimit);
             // 鄰接節點編號的暫存陣列
-            let tempEdgesId = [];
+            this.unusedEdges = [];
             // 權重
             let weight;
 
@@ -122,7 +126,7 @@ class BaseGraph extends Brush
                     // 將兩節點寫入鄰接的暫存陣列
                     tempEdges[i][j] = weight;
                     // 將兩節點寫入鄰接節點編號的暫存陣列
-                    tempEdgesId.push([i, j]);
+                    this.unusedEdges.push([i, j]);
                 }
             }
 
@@ -130,23 +134,21 @@ class BaseGraph extends Brush
             for (let i = 0; i < this.edgeLimit; i++)
             {
                 // 若所有節點皆以鄰接則跳出
-                if (!tempEdgesId.length)
+                if (!this.unusedEdges.length)
                 {
                     return;
                 }
                 // 從鄰接節點編號的暫存陣列隨機取出一份資料
-                let tempEdge = tempEdgesId.splice(get_random_int(tempEdgesId.length -1), 1)[0];
+                let tempEdge = this.unusedEdges.splice(get_random_int(this.unusedEdges.length -1), 1)[0];
                 let id1 = tempEdge[0];
                 let id2 = tempEdge[1];
                 // 將隨機取出的資料寫入 this.edges
                 this.edges[id1][id2] = tempEdges[id1][id2];
                 this.edges[id2][id1] = tempEdges[id1][id2];
             }
-
         }
         catch (e)
         {
-            console.log(e.message);
             throw e;
         }
     }
@@ -164,7 +166,6 @@ class BaseGraph extends Brush
         }
         catch (e)
         {
-            console.log(e.message);
             throw e;
         }
     }
@@ -178,12 +179,19 @@ class BaseGraph extends Brush
     {
         try
         {
-            this.draw_line(this.vertices[id1].x, this.vertices[id1].y,
-                           this.vertices[id2].x, this.vertices[id2].y);
+            if (this.vertices[id1] == undefined || this.vertices[id2] == undefined)
+            {
+                return;
+            }
+            this.draw_line(
+                this.vertices[id1].x,
+                this.vertices[id1].y,
+                this.vertices[id2].x,
+                this.vertices[id2].y
+            );
         }
         catch (e)
         {
-            console.log(e.message);
             throw e;
         }
     }
@@ -197,15 +205,15 @@ class BaseGraph extends Brush
     {
         try
         {
-            let x1 = this.vertices[id1].x;
-            let y1 = this.vertices[id1].y;
-            let x2 = this.vertices[id2].x;
-            let y2 = this.vertices[id2].y;
-            return this.get_distance(x1, y1, x2, y2);
+            return this.get_distance(
+                this.vertices[id1].x,
+                this.vertices[id1].y,
+                this.vertices[id2].x,
+                this.vertices[id2].y
+            );
         }
         catch (e)
         {
-            console.log(e.message);
             throw e;
         }
     }
@@ -222,7 +230,8 @@ class BaseGraph extends Brush
         {
             if (id1 == id2)
             {
-                return [id1, id2];
+                this.shortestPath = [id1, id2];
+                return this.shortestPath;
             }
 
             this.shortestDistance = 0;
@@ -249,7 +258,7 @@ class BaseGraph extends Brush
             // 設起點的 distance 設為 0
             distances[id1] = 0;
 
-            let safeLock = 50;
+            let safeLock = 100;
 
             while (unvisited.length)
             {
@@ -319,7 +328,7 @@ class BaseGraph extends Brush
         }
         catch (e)
         {
-            console.log(e);
+            throw e;
         }
     }
 }

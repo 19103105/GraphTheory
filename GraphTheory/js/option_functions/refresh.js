@@ -1,26 +1,28 @@
 /**
  * 重整畫布
  */
-function refresh_canvas()
+function refresh_vertices()
 {
-    update_inputs();
-    graph.set_vertex_limit(verticesLimitElement.value);
-    graph.set_edge_limit(edgesLimitElement.value);
-    graph.set_path(startVertexElement.value, endVertexElement.value);
-    graph.generate();
+    adjust_inputs();
+    graph.set_vertex_limit();
+    adjacencyMatrix.set_matrix_size(verticesLimitElement.value);
+    adjacencyMatrix.set_adjacency(graph.edges);
+    adjacencyMatrix.set_grids();
+    graph.generate(1, 0, 1);
 }
 
 function refresh_edges()
 {
-    update_inputs();
-    graph.set_edge_limit(edgesLimitElement.value);
-    graph.set_path(startVertexElement.value, endVertexElement.value);
-    graph.generate(0);
+    adjust_inputs();
+    graph.set_edge_limit();
+    adjacencyMatrix.set_adjacency(graph.edges);
+    adjacencyMatrix.set_grids();
+    graph.generate(0, 1, 1);
 }
 
 function refresh_path()
 {
-    update_inputs();
-    graph.set_path(startVertexElement.value, endVertexElement.value);
-    graph.generate(0, 0);
+    adjust_inputs();
+    graph.set_path();
+    graph.generate(0, 0, 1);
 }
